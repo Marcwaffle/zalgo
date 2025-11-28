@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLASSIFIED - Subject: ZALGO</title>
+    <title>Grimoire: ZALGO</title>
     <style>
         * {
             margin: 0;
@@ -12,610 +12,616 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            background: #1a1a1a;
-            color: #d4d4d4;
-            line-height: 1.6;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            background: #0d0d0d;
+            color: #1a1410;
             overflow-x: hidden;
-            padding: 20px;
+            padding: 60px 20px;
+            min-height: 100vh;
         }
 
-        /* Paper texture overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
-            max-width: 900px;
+        .grimoire-container {
+            max-width: 1600px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
-        /* File header */
-        .file-header {
-            background: rgba(40, 0, 0, 0.3);
-            border: 2px solid #8b0000;
-            padding: 30px;
-            margin-bottom: 20px;
+        .book-spread {
+            display: flex;
+            gap: 0;
+            max-width: 1400px;
+            margin: 0 auto 80px auto;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        .classified-stamp {
+        /* Binding shadow between pages */
+        .book-spread::before {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2rem;
-            font-weight: bold;
-            color: rgba(139, 0, 0, 0.6);
-            border: 3px solid rgba(139, 0, 0, 0.6);
-            padding: 5px 15px;
-            transform: rotate(15deg);
-            letter-spacing: 8px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 100%;
+            background: linear-gradient(to right, 
+                rgba(0,0,0,0.1), 
+                rgba(0,0,0,0.5) 50%, 
+                rgba(0,0,0,0.1));
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .file-number {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 10px;
+        /* Candlelight flicker effect */
+        @keyframes candleFlicker {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(0.95); }
         }
 
-        .subject-line {
-            font-size: 2.5rem;
-            color: #fff;
-            font-weight: bold;
-            margin: 10px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: corruptText 8s infinite;
-        }
-
-        @keyframes corruptText {
-            0%, 95%, 100% { 
-                transform: translate(0);
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            }
-            96% { 
-                transform: translate(-2px, 1px);
-                text-shadow: 3px 0 rgba(255,0,0,0.5), -3px 0 rgba(0,255,255,0.5);
-            }
-            98% {
-                transform: translate(2px, -1px);
-                text-shadow: -3px 0 rgba(255,0,0,0.5), 3px 0 rgba(0,255,255,0.5);
-            }
-        }
-
-        .threat-level {
-            display: inline-block;
-            background: #8b0000;
-            color: #fff;
-            padding: 5px 15px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        /* Document sections */
-        .document {
-            background: rgba(245, 245, 220, 0.95);
-            color: #1a1a1a;
-            padding: 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+        .page {
+            width: 600px;
+            min-height: 800px;
+            background: linear-gradient(to bottom, #f5f0e8 0%, #e8dcc0 100%);
+            padding: 60px 50px;
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.8),
+                inset 0 0 80px rgba(50, 30, 10, 0.08);
             position: relative;
-            border: 1px solid #8b7355;
+            border: 1px solid #c4b5a0;
+            animation: candleFlicker 4s infinite;
         }
 
-        .document::before {
+        /* Heavy aging and stains */
+        .page::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 100%;
+            bottom: 0;
             background: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 29px,
-                    rgba(139, 0, 0, 0.03) 29px,
-                    rgba(139, 0, 0, 0.03) 30px
-                );
+                radial-gradient(circle at 15% 20%, rgba(101, 67, 33, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 10%, rgba(101, 67, 33, 0.2) 0%, transparent 35%),
+                radial-gradient(circle at 10% 80%, rgba(101, 67, 33, 0.3) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(101, 67, 33, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.03) 0%, transparent 60%);
             pointer-events: none;
         }
 
-        .document-header {
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+        /* Inner binding shadow */
+        .page-left::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 100%;
+            background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+            pointer-events: none;
+            z-index: 5;
         }
 
-        .document-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .document-date {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .field {
-            margin-bottom: 20px;
-        }
-
-        .field-label {
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            color: #444;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-
-        .field-value {
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            border-left: 3px solid #8b0000;
-            min-height: 30px;
-        }
-
-        .redacted {
-            background: #000;
-            color: #000;
-            padding: 2px 20px;
-            display: inline-block;
-            position: relative;
-        }
-
-        .redacted::after {
-            content: '█████████';
+        .page-right::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            color: #000;
+            width: 50px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.3), transparent);
+            pointer-events: none;
+            z-index: 5;
         }
 
-        /* Corruption effects that increase down the page */
-        .corruption-low {
-            position: relative;
+        .page-left {
+            border-right: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
         }
 
-        .corruption-medium {
-            position: relative;
-            animation: glitchMedium 5s infinite;
+        .page-right {
+            border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
         }
 
-        @keyframes glitchMedium {
-            0%, 96%, 100% { 
-                transform: translate(0);
-                filter: none;
-            }
-            97% { 
-                transform: translate(-1px, 1px);
-                filter: hue-rotate(90deg);
-            }
-            98% {
-                transform: translate(1px, -1px);
-            }
-        }
-
-        .corruption-high {
-            position: relative;
-            animation: glitchHigh 3s infinite;
-        }
-
-        @keyframes glitchHigh {
-            0%, 90%, 100% { 
-                transform: translate(0);
-                filter: none;
-            }
-            91% { 
-                transform: translate(-2px, 2px);
-                filter: hue-rotate(180deg) saturate(2);
-            }
-            93% {
-                transform: translate(2px, -2px);
-                filter: invert(0.1);
-            }
-            95% {
-                transform: translate(-1px, 1px);
-            }
-        }
-
-        .corruption-critical {
-            animation: glitchCritical 2s infinite;
-            position: relative;
-        }
-
-        @keyframes glitchCritical {
-            0%, 85%, 100% { 
-                transform: translate(0) skew(0deg);
-                filter: none;
-            }
-            86% { 
-                transform: translate(-3px, 2px) skew(-2deg);
-                filter: hue-rotate(270deg) saturate(3) contrast(1.5);
-            }
-            88% {
-                transform: translate(3px, -3px) skew(2deg);
-                filter: invert(0.2);
-            }
-            90% {
-                transform: translate(-2px, 1px) skew(-1deg);
-            }
-            92% {
-                transform: translate(2px, -1px) skew(1deg);
-                filter: saturate(5);
-            }
-        }
-
-        /* Notes style */
-        .handwritten-note {
-            background: rgba(255, 250, 205, 0.95);
-            padding: 20px;
-            margin: 30px 0;
-            border: 1px dashed #999;
-            font-family: 'Comic Sans MS', cursive;
-            transform: rotate(-1deg);
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .handwritten-note::before {
-            content: '[HANDWRITTEN NOTE ATTACHED]';
-            display: block;
-            font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
-            color: #999;
-            margin-bottom: 10px;
+        /* Gothic header */
+        .entry-header {
             text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px double #2a2520;
         }
 
-        .warning-box {
-            background: rgba(139, 0, 0, 0.1);
-            border: 2px solid #8b0000;
-            padding: 20px;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .warning-box::before {
-            content: '⚠ WARNING ⚠';
-            display: block;
-            text-align: center;
-            font-size: 1.2rem;
+        .demon-name {
+            font-size: 3rem;
+            font-family: 'Lucida Blackletter', 'Old English Text MT', serif;
+            color: #1a0a0a;
+            letter-spacing: 4px;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 0px rgba(139, 0, 0, 0.2);
+        }
+
+        .demon-title {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #4a3a2a;
+            margin-bottom: 5px;
+        }
+
+        .demon-rank {
+            font-size: 0.9rem;
             color: #8b0000;
-        }
-
-        /* Incident report style */
-        .incident-report {
-            background: rgba(245, 245, 220, 0.95);
-            color: #1a1a1a;
-            padding: 30px;
-            margin: 20px 0;
-            border: 2px solid #666;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-        }
-
-        .incident-header {
-            text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-weight: bold;
-            font-size: 1.2rem;
         }
 
-        .signature-line {
-            margin-top: 40px;
-            border-top: 1px solid #000;
-            padding-top: 10px;
+        /* Gothic decorative elements */
+        .gothic-ornament {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: #4a3a2a;
         }
 
-        /* List items */
-        .observation-list {
+        /* Section headers */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a0a0a;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            border-left: 5px solid #8b0000;
+            padding-left: 12px;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Body text */
+        .text-block {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #2a2520;
+            margin-bottom: 15px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        /* Ritual text */
+        .ritual-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #2a2520;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(139, 0, 0, 0.03);
+            border: 1px dashed #8b7355;
+            font-style: italic;
+        }
+
+        /* Lists */
+        .demon-list {
             list-style: none;
             padding-left: 0;
+            margin: 15px 0;
         }
 
-        .observation-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+        .demon-list li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            color: #2a2520;
+            line-height: 1.6;
         }
 
-        .observation-list li::before {
-            content: '■ ';
+        .demon-list li::before {
+            content: '†';
+            position: absolute;
+            left: 0;
             color: #8b0000;
             font-weight: bold;
-            margin-right: 8px;
+            font-size: 1.2rem;
         }
 
-        /* Footer */
-        .document-footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0,0,0,0.2);
-            font-size: 0.8rem;
-            color: #666;
+        /* Warning boxes */
+        .warning {
+            margin: 20px 0;
+            padding: 15px;
+            border: 3px double #8b0000;
+            background: rgba(139, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .warning-title {
+            font-weight: bold;
+            color: #8b0000;
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .warning-text {
+            font-size: 0.9rem;
+            text-align: center;
+            font-style: italic;
+            color: #3a2520;
+        }
+
+        /* Handwritten scrawl in margins */
+        .margin-scrawl {
+            position: absolute;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 0.85rem;
+            color: #654321;
+            transform: rotate(-5deg);
+            max-width: 150px;
+            line-height: 1.3;
+        }
+
+        .scrawl-1 {
+            top: 120px;
+            right: -80px;
+            transform: rotate(90deg);
+        }
+
+        .scrawl-2 {
+            bottom: 100px;
+            left: -70px;
+            transform: rotate(-90deg);
+        }
+
+        .scrawl-3 {
+            top: 400px;
+            right: 10px;
+            font-size: 0.75rem;
+        }
+
+        .scrawl-4 {
+            top: 200px;
+            left: -75px;
+            transform: rotate(-90deg);
+        }
+
+        /* Blood splatter */
+        .blood-splatter {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(100, 0, 0, 0.3) 0%, rgba(139, 0, 0, 0.15) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .splatter-1 {
+            top: 60px;
+            right: 80px;
+            transform: scale(1.2);
+        }
+
+        .splatter-2 {
+            bottom: 150px;
+            left: 50px;
+            transform: scale(0.8);
+        }
+
+        .splatter-3 {
+            top: 150px;
+            left: 100px;
+            transform: scale(0.6);
+        }
+
+        /* Sigil sketch */
+        .sigil-sketch {
+            margin: 25px auto;
+            width: 180px;
+            height: 180px;
+            border: 2px solid #4a3a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #8b0000;
+            background: rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+
+        .sigil-sketch::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .sigil-sketch::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: 60%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        /* Page numbers */
+        .page-number {
+            position: absolute;
+            bottom: 30px;
+            font-size: 1.1rem;
+            color: #6a5a4a;
+            font-style: italic;
+        }
+
+        .page-number-left {
+            left: 50px;
+        }
+
+        .page-number-right {
+            right: 50px;
+        }
+
+        /* Ink smudges */
+        .ink-smudge {
+            position: absolute;
+            width: 40px;
+            height: 15px;
+            background: rgba(30, 20, 10, 0.15);
+            border-radius: 50%;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .smudge-1 {
+            top: 250px;
+            left: 120px;
+        }
+
+        .smudge-2 {
+            bottom: 300px;
+            right: 100px;
+        }
+
+        /* Gothic initial cap */
+        .initial-cap {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            margin: 10px 15px 0 0;
+            color: #1a0a0a;
+            font-family: 'Lucida Blackletter', 'Old English Text MT', serif;
+            text-shadow: 1px 1px 0px rgba(139, 0, 0, 0.3);
+        }
+
+        /* Spread separator */
+        .spread-separator {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #4a3a2a, transparent);
+            margin: 40px auto;
+            max-width: 300px;
         }
 
         /* Responsive */
+        @media (max-width: 1400px) {
+            .book-spread {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .book-spread::before {
+                display: none;
+            }
+
+            .page {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .margin-scrawl {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
-            .document {
-                padding: 20px;
-            }
-            
-            .subject-line {
-                font-size: 1.8rem;
+            .page {
+                padding: 40px 30px;
+                min-height: 600px;
             }
 
-            .classified-stamp {
-                font-size: 1.2rem;
-                letter-spacing: 4px;
+            .demon-name {
+                font-size: 2rem;
             }
-        }
 
-        /* Decay animation on load */
-        .document {
-            opacity: 0;
-            animation: fadeInDoc 0.8s forwards;
-        }
-
-        .document:nth-child(2) { animation-delay: 0.2s; }
-        .document:nth-child(3) { animation-delay: 0.4s; }
-        .document:nth-child(4) { animation-delay: 0.6s; }
-        .document:nth-child(5) { animation-delay: 0.8s; }
-        .document:nth-child(6) { animation-delay: 1s; }
-        .document:nth-child(7) { animation-delay: 1.2s; }
-
-        @keyframes fadeInDoc {
-            to {
-                opacity: 1;
+            .initial-cap {
+                font-size: 3rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- File Header -->
-        <div class="file-header">
-            <div class="classified-stamp">CLASSIFIED</div>
-            <div class="file-number">FILE NO: ████-Z-001</div>
-            <div class="file-number">CLEARANCE LEVEL: <span style="color: #8b0000;">MAXIMUM</span></div>
-            <h1 class="subject-line">SUBJECT: ZALGO</h1>
-            <div class="file-number">DESIGNATION: "He Who Waits Behind The Rows"</div>
-            <span class="threat-level">THREAT LEVEL: EXISTENTIAL</span>
-        </div>
-
-        <!-- Basic Information Document -->
-        <div class="document corruption-low">
-            <div class="document-header">
-                <div class="document-title">Subject Identification Report</div>
-                <div class="document-date">Date: [ENTER DATE] | Report ID: SIR-Z-001</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Primary Designation</div>
-                <div class="field-value">Zalgo / The Corruption / He Who Waits Behind The Rows</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Age / Temporal Origin</div>
-                <div class="field-value">[Fill in age/origin - possibly predates recorded history]</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Physical Form</div>
-                <div class="field-value">[Fill in - Note: Subject has no fixed form, manifests through vessels]</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Classification</div>
-                <div class="field-value">[Fill in species/entity type - Extradimensional? Memetic? Reality corruptor?]</div>
-            </div>
-
-            <div class="warning-box">
-                Direct observation of subject has resulted in <span class="redacted">seventeen</span> casualties and <span class="redacted">forty-three</span> cases of irreversible psychological contamination.
-            </div>
-        </div>
-
-        <!-- Physical Description Document -->
-        <div class="document corruption-medium">
-            <div class="document-header">
-                <div class="document-title">Physical Manifestation Report</div>
-                <div class="document-date">Date: [ENTER DATE] | Report ID: PMR-Z-002</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Visual Description</div>
-                <div class="field-value">[Fill in appearance details - describe the vessels, the wrongness, the decay. Note how reality seems to distort around manifestations.]</div>
-            </div>
-
-            <div class="handwritten-note">
-                It doesn't HAVE a form, not really. Every time we see it, it's different. Wearing something. Someone. The vessels rot from the inside out but they keep moving. Keep spreading. God help us, they keep spreading.
-                <br><br>
-                - Dr. [REDACTED], Field Observation Log
-            </div>
-
-            <div class="field">
-                <div class="field-label">Notable Characteristics</div>
-                <div class="field-value">
-                    <ul class="observation-list">
-                        <li>[Characteristic 1 - e.g., Text corruption in vicinity]</li>
-                        <li>[Characteristic 2 - e.g., Reality distortion effects]</li>
-                        <li>[Characteristic 3 - e.g., Spreading decay patterns]</li>
-                        <li>[Add more observations]</li>
-                    </ul>
+    <div class="grimoire-container">
+        <!-- FIRST SPREAD: Pages 237-238 - Basic Information -->
+        <div class="book-spread">
+            <!-- LEFT PAGE -->
+            <div class="page page-left">
+                <div class="blood-splatter splatter-1"></div>
+                <div class="ink-smudge smudge-1"></div>
+                <div class="margin-scrawl scrawl-1">DO NOT ATTEMPT</div>
+                
+                <div class="entry-header">
+                    <h1 class="demon-name">ZALGO</h1>
+                    <p class="demon-title">"He Who Waits Behind The Rows"</p>
+                    <p class="demon-rank">⸸ Eldritch Entity ⸸</p>
                 </div>
+
+                <div class="gothic-ornament">❦</div>
+
+                <div class="section-title">Basic Information</div>
+                <p class="text-block">
+                    <strong>Character:</strong> Zalgo / The Corruption / He Who Waits Behind The Rows
+                </p>
+                <p class="text-block">
+                    <strong>Age:</strong> [Fill in age - Primordial? Beyond time?]
+                </p>
+                <p class="text-block">
+                    <strong>Pronouns / Gender:</strong> [Fill in pronouns]
+                </p>
+                <p class="text-block">
+                    <strong>Species:</strong> [Fill in species classification]
+                </p>
+
+                <div class="section-title">Nature & Origin</div>
+                <p class="text-block">
+                    <span class="initial-cap">Z</span>algo, known by many appellations—The Corruption, The Nezperdian Hivemind, He Who Waits—is an entity of unfathomable antiquity. [Fill in origin information: Does it predate humanity? From what realm or dimension does it originate? Is it older than time itself?]
+                </p>
+
+                <p class="text-block">
+                    [Fill in classification: Extradimensional horror? Living concept? Reality cancer? What is its true nature?]
+                </p>
+
+                <div class="section-title">Physical Manifestation</div>
+                <p class="text-block">
+                    This entity possesses no fixed form. It inhabits vessels—both living and dead—corrupting them utterly. [Describe its appearance when manifested. What do corrupted vessels look like? How does reality distort around it? What visual signs herald its presence?]
+                </p>
+
+                <div class="page-number page-number-left">237</div>
+            </div>
+
+            <!-- RIGHT PAGE -->
+            <div class="page page-right">
+                <div class="ink-smudge smudge-2"></div>
+                <div class="margin-scrawl scrawl-2">Reality frays at edges</div>
+
+                <div class="warning">
+                    <div class="warning-title">⚠ Caveat Lector ⚠</div>
+                    <p class="warning-text">
+                        Mere knowledge of this entity may constitute an invitation. To read is to acknowledge. To acknowledge is to be seen.
+                    </p>
+                </div>
+
+                <div class="section-title">Strengths</div>
+                <ul class="demon-list">
+                    <li>[Strength 1 - e.g., Possession of corpses and broken minds]</li>
+                    <li>[Strength 2 - e.g., Decay through focused touch]</li>
+                    <li>[Strength 3 - e.g., Reality warping in localized areas]</li>
+                    <li>[Strength 4 - e.g., Psychological erosion through whispers]</li>
+                    <li>[Add more strengths as needed]</li>
+                </ul>
+
+                <div class="section-title">Habits & Manifestations</div>
+                <ul class="demon-list">
+                    <li>[Quirk 1 - e.g., Trails hand along surfaces, leaving decay]</li>
+                    <li>[Quirk 2 - e.g., Head tilts at unnatural angles]</li>
+                    <li>[Quirk 3 - e.g., Voice has layered quality]</li>
+                    <li>[Quirk 4 - e.g., Accompanied by constant whispers]</li>
+                    <li>[Add more habits as needed]</li>
+                </ul>
+
+                <div class="section-title">Personality</div>
+                <p class="text-block">
+                    [Fill in personality description - Is it patient? Curious? Indifferent? How does it interact with mortals? What motivates it?]
+                </p>
+
+                <div class="gothic-ornament">⁂</div>
+
+                <div class="page-number page-number-right">238</div>
             </div>
         </div>
 
-        <!-- Behavioral Analysis Document -->
-        <div class="document corruption-medium">
-            <div class="document-header">
-                <div class="document-title">Behavioral Analysis & Personality Profile</div>
-                <div class="document-date">Date: [ENTER DATE] | Report ID: BAP-Z-003</div>
-            </div>
+        <div class="spread-separator"></div>
 
-            <div class="field">
-                <div class="field-label">Psychological Profile</div>
-                <div class="field-value">[Fill in personality description. Consider: Is it malevolent? Indifferent? Does it have goals or simply exists as corruption incarnate?]</div>
-            </div>
+        <!-- SECOND SPREAD: Pages 239-240 - Warding & Containment -->
+        <div class="book-spread">
+            <!-- LEFT PAGE -->
+            <div class="page page-left">
+                <div class="blood-splatter splatter-3"></div>
+                <div class="margin-scrawl scrawl-4">Three died attempting</div>
 
-            <div class="field">
-                <div class="field-label">Observed Behaviors</div>
-                <div class="field-value">
-                    <ul class="observation-list">
-                        <li>[Behavior 1]</li>
-                        <li>[Behavior 2]</li>
-                        <li>[Behavior 3]</li>
-                        <li>[Add more patterns]</li>
-                    </ul>
+                <div class="section-title">Known Weaknesses</div>
+                <p class="text-block">
+                    [Fill in weakness information - Ancient wards? Salt circles? Iron? What can temporarily contain or repel it? Are there true weaknesses or only delays?]
+                </p>
+
+                <ul class="demon-list">
+                    <li>[Weakness 1 - e.g., Ancient protective measures]</li>
+                    <li>[Weakness 2 - e.g., Strong mental coherence]</li>
+                    <li>[Weakness 3 - e.g., Fragile avatar vessels]</li>
+                    <li>[Weakness 4 - e.g., Cannot manifest where reality is strong]</li>
+                    <li>[Add more weaknesses as needed]</li>
+                </ul>
+
+                <div class="section-title">Warding Methods</div>
+                <div class="ritual-text">
+                    <strong>Salt Barriers:</strong> [Fill in - How effective? How long do they last? Specific configurations?]
+                    <br><br>
+                    <strong>Iron Implements:</strong> [Fill in - What forms work best? Horseshoes? Nails? Weapons?]
+                    <br><br>
+                    <strong>Holy Symbols:</strong> [Fill in - Do religious protections work? Which faiths? Why?]
+                    <br><br>
+                    <strong>Ancient Sigils:</strong> [Fill in - Specific symbols? Where inscribed? How maintained?]
                 </div>
-            </div>
 
-            <div class="field">
-                <div class="field-label">Habits / Patterns</div>
-                <div class="field-value">
-                    <ul class="observation-list">
-                        <li>[Pattern/Quirk 1]</li>
-                        <li>[Pattern/Quirk 2]</li>
-                        <li>[Pattern/Quirk 3]</li>
-                    </ul>
+                <div class="warning">
+                    <div class="warning-title">☠ WARNING ☠</div>
+                    <p class="warning-text">
+                        All protections are temporary. The entity is patient beyond mortal comprehension. It will wait.
+                    </p>
                 </div>
-            </div>
-        </div>
 
-        <!-- Capabilities Assessment -->
-        <div class="document corruption-high">
-            <div class="document-header">
-                <div class="document-title">Threat Assessment: Capabilities</div>
-                <div class="document-date">Date: [ENTER DATE] | Report ID: TAC-Z-004</div>
+                <div class="page-number page-number-left">239</div>
             </div>
 
-            <div class="field">
-                <div class="field-label">Known Abilities / Strengths</div>
-                <div class="field-value">
-                    <ul class="observation-list">
-                        <li>[Strength 1 - e.g., Reality manipulation]</li>
-                        <li>[Strength 2 - e.g., Memetic infection]</li>
-                        <li>[Strength 3 - e.g., Vessel possession]</li>
-                        <li>[Strength 4 - e.g., Dimensional traversal]</li>
-                        <li>[Add more capabilities]</li>
-                    </ul>
+            <!-- RIGHT PAGE -->
+            <div class="page page-right">
+                <div class="blood-splatter splatter-2"></div>
+                <div class="margin-scrawl scrawl-3">He comes</div>
+
+                <div class="section-title">Summoning Ritual</div>
+                <div class="warning">
+                    <div class="warning-title">☠ FORBIDDEN ☠</div>
+                    <p class="warning-text">
+                        To summon Zalgo is to invite oblivion. This ritual is recorded for historical purposes only. DO NOT PERFORM.
+                    </p>
                 </div>
-            </div>
 
-            <div class="warning-box">
-                Subject has demonstrated ability to breach containment through <span class="redacted">cognitohazardous</span> means. Personnel are advised that THINKING about subject may constitute a containment breach.
-            </div>
-
-            <div class="field">
-                <div class="field-label">Documented Weaknesses / Limitations</div>
-                <div class="field-value">
-                    <ul class="observation-list">
-                        <li>[Weakness 1 - if any can be confirmed]</li>
-                        <li>[Weakness 2]</li>
-                        <li>[Weakness 3]</li>
-                        <li>[Note: Exploitable weaknesses remain largely theoretical]</li>
-                    </ul>
+                <div class="ritual-text">
+                    <strong>Requirements:</strong><br>
+                    [Fill in ritual components - What is needed? Circle configurations? Specific times? Sacrifices? Words of power?]
+                    <br><br>
+                    <strong>Incantation:</strong><br>
+                    [Fill in summoning words or phrases - Ancient languages? Specific verses? Corrupted text?]
+                    <br><br>
+                    <strong>Warning:</strong> There exists no known method to banish that which is summoned. The ritual completes with the summoner's consumption.
                 </div>
-            </div>
-        </div>
 
-        <!-- Relationship Matrix -->
-        <div class="document corruption-high">
-            <div class="document-header">
-                <div class="document-title">Known Associations & Conflicts</div>
-                <div class="document-date">Date: [ENTER DATE] | Report ID: KAC-Z-005</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Allied Entities / Followers</div>
-                <div class="field-value">[Fill in relationships with other entities. Confirm with other players/characters. Include nature of relationship - servants? Corrupted? Willing allies?]</div>
-            </div>
-
-            <div class="field">
-                <div class="field-label">Hostile Entities / Adversaries</div>
-                <div class="field-value">[Fill in enemy information. Who opposes Zalgo? What is the nature of the conflict?]</div>
-            </div>
-
-            <div class="handwritten-note" style="transform: rotate(1deg);">
-                Found this carved into the wall of Research Station Theta after the incident:
-                <br><br>
-                "HE WAITS"<br>
-                "HE WATCHES"<br>
-                "HE COMES"<br>
-                <br>
-                All personnel lost. Station quarantined indefinitely.
-            </div>
-        </div>
-
-        <!-- Incident Reports -->
-        <div class="document corruption-critical">
-            <div class="document-header">
-                <div class="document-title">Incident Log [EXCERPTS]</div>
-                <div class="document-date">Multiple Dates | Report ID: IL-Z-006</div>
-            </div>
-
-            <div class="incident-report">
-                <div class="incident-header">INCIDENT REPORT #[NUMBER]</div>
-                <p><strong>Date:</strong> [DATE]</p>
-                <p><strong>Location:</strong> [LOCATION]</p>
-                <p><strong>Summary:</strong> [Fill in incident details - what happened? How did Zalgo manifest? What were the consequences?]</p>
-                <p><strong>Casualties:</strong> [NUMBER]</p>
-                <p><strong>Status:</strong> <span style="color: #8b0000;">[UNCONTAINED / ONGOING / TERMINATED]</span></p>
-            </div>
-
-            <div class="incident-report">
-                <div class="incident-header">INCIDENT REPORT #[NUMBER]</div>
-                <p><strong>Date:</strong> [DATE]</p>
-                <p><strong>Location:</strong> [LOCATION]</p>
-                <p><strong>Summary:</strong> [Another incident]</p>
-                <p><strong>Casualties:</strong> [NUMBER]</p>
-                <p><strong>Status:</strong> <span style="color: #8b0000;">[STATUS]</span></p>
-            </div>
-        </div>
-
-        <!-- Additional Notes -->
-        <div class="document corruption-critical">
-            <div class="document-header">
-                <div class="document-title">Additional Intelligence & Notes</div>
-                <div class="document-date">Date: [ENTER DATE] | Report ID: AIN-Z-007</div>
-            </div>
-
-            <div class="field">
-                <div class="field-value">
-                    [Fill in any additional information, theories, backstory elements, or observations that don't fit in other sections. This is where you can add depth - maybe fragments of lore, theories about Zalgo's origins, notes from researchers who have studied it, etc.]
+                <div class="sigil-sketch">
+                    ☥
                 </div>
-            </div>
+                <p style="text-align: center; font-size: 0.85rem; font-style: italic; color: #4a3a2a; margin-top: -15px;">
+                    [Protective sigil - effectiveness unconfirmed]
+                </p>
 
-            <div class="warning-box" style="animation: glitchCritical 1s infinite;">
-                THIS DOCUMENT HAS BEEN COMPROMISED
-                <br>
-                MEMETIC HAZARD DETECTED
-                <br>
-                DO NOT CONTINUE READING
-                <br>
-                IT IS ALREADY TOO LATE
-                <br>
-                H̴̡̛̖̠̳̘̪̤̫̬̩̙̪͚̥͎͙̱̦̗̥̠̮͓̋̀̂̾͛̀̊̃̿̐͛̀͋̀̇̔̚͘͜͝͝E̵̡̧̧̡̨̛͔̪͙̘͕̱̣̱̦̺̮̥͓̖̱̹̪̓̊̓͊̈́̅̎̐̈́͂͊̽̓̓̈́̄̚͜͝͠ ̶̨̧̡̧̛̛̦̰̪̮̭̬̹̦̪̦̮̩͚̠͎̣̝̞̹̗̪̙͌̓̈́͛̀̌̿̓̈́̆̿̆̋͆̅̚͜͝͝Ć̸̢̢̢̨̡̛̼̭̙̝̱̱̩̟̝̱͕̞̻̰̖̻̯̜̈́̍͛̓̉̾̀̓̂̀̈̓͋̈́̐͒̇͐̿̚͜͝Ơ̴̧̨̢̢̧̖̩͔̙͍̜̗̰̜̹̻̬̬̭̹̰̭̘͙̫̋̾̓͊͂̄́̽̉̈́̀̚M̸̨̧̛̝̳̱̯̟̺͍̮̗̼͎͎̙̮̳̰͇̯͖̣͆̏̈̊̾̉̌̅̾́́̈́́̾̈́͝͝͝͠E̵̡̢̢̛̛͔̗̩̦͉̩̫̤̳̼̠̲̩̘̿͑̈́͒̿̈́̽̋̓̊̈́̐̾̊̎̆̌̈́̂͘͝S̸̡̧̨̛͈̻̺̠̪̞͎͔̻͇̬̙̪̮̱̜̓̓̃͌͊͂̉̎̿̓̅̔̾̊͋͛̏̄̚̕̕͝͠͝
-            </div>
+                <div class="section-title">Relationships</div>
+                <p class="text-block">
+                    <strong>Associates:</strong> [Fill in - Does it have servants? Cults? Other entities it tolerates?]
+                </p>
+                <p class="text-block">
+                    <strong>Adversaries:</strong> [Fill in - What opposes it? The Operator? Other forces? Why?]
+                </p>
 
-            <div class="document-footer">
-                END OF FILE • DO NOT DISTRIBUTE • UNAUTHORIZED ACCESS IS PUNISHABLE BY <span class="redacted">REDACTED</span>
+                <div class="gothic-ornament">⁂</div>
+
+                <p class="text-block" style="font-size: 0.9rem; font-style: italic; text-align: center; margin-top: 20px;">
+                    See also: The Aberdeen Incident (pg. 189), Theories of Dimensional Corruption (pg. 402), The Black Testament (pg. 517)
+                </p>
+
+                <div class="page-number page-number-right">240</div>
             </div>
         </div>
     </div>
