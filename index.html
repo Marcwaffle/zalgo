@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zalgo - Character Profile</title>
+    <title>CLASSIFIED - Subject: ZALGO</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,14 @@
 
         body {
             font-family: 'Courier New', monospace;
-            background: #0a0a0a;
+            background: #1a1a1a;
             color: #d4d4d4;
             line-height: 1.6;
             overflow-x: hidden;
+            padding: 20px;
         }
 
-        /* Animated background effect */
+        /* Paper texture overlay */
         body::before {
             content: '';
             position: fixed;
@@ -27,478 +28,596 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(139, 0, 0, 0.02) 0%, transparent 30%);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
             pointer-events: none;
             z-index: 0;
-            animation: pulseRed 8s infinite ease-in-out;
-        }
-
-        @keyframes pulseRed {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Scanline effect */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-            z-index: 0;
-            animation: scanlines 8s linear infinite;
-        }
-
-        @keyframes scanlines {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(10px); }
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px;
             position: relative;
             z-index: 1;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 40px 0;
-            border-bottom: 2px solid #333;
+        /* File header */
+        .file-header {
+            background: rgba(40, 0, 0, 0.3);
+            border: 2px solid #8b0000;
+            padding: 30px;
+            margin-bottom: 20px;
             position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        h1 {
-            font-size: 4rem;
-            color: #fff;
-            text-shadow: 
-                0 0 20px rgba(255,255,255,0.3),
-                0 0 40px rgba(139, 0, 0, 0.2);
-            margin-bottom: 10px;
+        .classified-stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: rgba(139, 0, 0, 0.6);
+            border: 3px solid rgba(139, 0, 0, 0.6);
+            padding: 5px 15px;
+            transform: rotate(15deg);
             letter-spacing: 8px;
-            animation: glitchTitle 8s infinite;
-            position: relative;
         }
 
-        h1::before,
-        h1::after {
-            content: 'ZALGO';
+        .file-number {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .subject-line {
+            font-size: 2.5rem;
+            color: #fff;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: corruptText 8s infinite;
+        }
+
+        @keyframes corruptText {
+            0%, 95%, 100% { 
+                transform: translate(0);
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            }
+            96% { 
+                transform: translate(-2px, 1px);
+                text-shadow: 3px 0 rgba(255,0,0,0.5), -3px 0 rgba(0,255,255,0.5);
+            }
+            98% {
+                transform: translate(2px, -1px);
+                text-shadow: -3px 0 rgba(255,0,0,0.5), 3px 0 rgba(0,255,255,0.5);
+            }
+        }
+
+        .threat-level {
+            display: inline-block;
+            background: #8b0000;
+            color: #fff;
+            padding: 5px 15px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Document sections */
+        .document {
+            background: rgba(245, 245, 220, 0.95);
+            color: #1a1a1a;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+            position: relative;
+            border: 1px solid #8b7355;
+        }
+
+        .document::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             height: 100%;
-            opacity: 0;
-        }
-
-        h1::before {
-            color: #ff0000;
-            animation: glitchBefore 3s infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        }
-
-        h1::after {
-            color: #00ffff;
-            animation: glitchAfter 3s infinite;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-        }
-
-        @keyframes glitchTitle {
-            0%, 90%, 100% { 
-                text-shadow: 
-                    0 0 20px rgba(255,255,255,0.3),
-                    0 0 40px rgba(139, 0, 0, 0.2);
-                transform: translate(0);
-            }
-            92% { 
-                text-shadow: 
-                    2px 0 20px rgba(255,0,0,0.5), 
-                    -2px 0 20px rgba(0,255,255,0.5),
-                    0 0 40px rgba(139, 0, 0, 0.4);
-                transform: translate(-2px, 1px);
-            }
-            94% {
-                text-shadow: 
-                    -2px 0 20px rgba(255,0,0,0.5), 
-                    2px 0 20px rgba(0,255,255,0.5),
-                    0 0 40px rgba(139, 0, 0, 0.4);
-                transform: translate(2px, -1px);
-            }
-        }
-
-        @keyframes glitchBefore {
-            0%, 95%, 100% { 
-                opacity: 0; 
-                transform: translate(0);
-            }
-            96% { 
-                opacity: 0.8; 
-                transform: translate(-3px, -2px);
-            }
-            97% {
-                opacity: 0.8;
-                transform: translate(2px, 1px);
-            }
-        }
-
-        @keyframes glitchAfter {
-            0%, 95%, 100% { 
-                opacity: 0; 
-                transform: translate(0);
-            }
-            96% { 
-                opacity: 0.8; 
-                transform: translate(3px, 2px);
-            }
-            97% {
-                opacity: 0.8;
-                transform: translate(-2px, -1px);
-            }
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            font-style: italic;
-        }
-
-        .section {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0 rgba(139, 0, 0, 0);
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(45deg, transparent, rgba(139, 0, 0, 0.15), transparent);
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 29px,
+                    rgba(139, 0, 0, 0.03) 29px,
+                    rgba(139, 0, 0, 0.03) 30px
+                );
             pointer-events: none;
-            z-index: -1;
         }
 
-        .section:hover::before {
-            opacity: 1;
+        .document-header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
 
-        .section:hover {
-            border-color: #8b0000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.3);
-        }
-
-        h2 {
-            font-size: 2rem;
-            color: #fff;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #444;
-            position: relative;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, #8b0000, #fff);
-            animation: lineGrow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes lineGrow {
-            0% { width: 60px; }
-            100% { width: 120px; }
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .label {
+        .document-title {
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #aaa;
+            color: #1a1a1a;
+            margin-bottom: 5px;
             text-transform: uppercase;
+        }
+
+        .document-date {
             font-size: 0.9rem;
+            color: #666;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: #444;
+            margin-bottom: 5px;
             letter-spacing: 1px;
         }
 
-        .value {
-            color: #d4d4d4;
+        .field-value {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-left: 3px solid #8b0000;
+            min-height: 30px;
         }
 
-        .content-block {
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(0,0,0,0.3);
-            border-left: 3px solid #555;
-            border-radius: 4px;
-        }
-
-        .list-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .list-item:last-child {
-            border-bottom: none;
-        }
-
-        .list-item::before {
-            content: '▸ ';
-            color: #888;
-            margin-right: 10px;
-        }
-
-        /* Glitch effect on hover */
-        .glitch-text {
-            position: relative;
+        .redacted {
+            background: #000;
+            color: #000;
+            padding: 2px 20px;
             display: inline-block;
+            position: relative;
         }
 
-        .glitch-text:hover {
-            animation: textGlitch 0.3s;
+        .redacted::after {
+            content: '█████████';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #000;
         }
 
-        @keyframes textGlitch {
-            0% { transform: translate(0); }
-            20% { 
-                transform: translate(-2px, 2px); 
-                text-shadow: 2px -2px 0 #ff0000, -2px 2px 0 #00ffff;
+        /* Corruption effects that increase down the page */
+        .corruption-low {
+            position: relative;
+        }
+
+        .corruption-medium {
+            position: relative;
+            animation: glitchMedium 5s infinite;
+        }
+
+        @keyframes glitchMedium {
+            0%, 96%, 100% { 
+                transform: translate(0);
+                filter: none;
             }
-            40% { 
-                transform: translate(2px, -2px); 
-                text-shadow: -2px 2px 0 #ff0000, 2px -2px 0 #00ffff;
+            97% { 
+                transform: translate(-1px, 1px);
+                filter: hue-rotate(90deg);
             }
-            60% { 
-                transform: translate(-2px, -2px); 
-                text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ffff;
-            }
-            80% { 
-                transform: translate(2px, 2px); 
-                text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #00ffff;
-            }
-            100% { 
-                transform: translate(0); 
-                text-shadow: none;
+            98% {
+                transform: translate(1px, -1px);
             }
         }
 
-        /* Whispers effect */
-        .whispers {
-            position: fixed;
+        .corruption-high {
+            position: relative;
+            animation: glitchHigh 3s infinite;
+        }
+
+        @keyframes glitchHigh {
+            0%, 90%, 100% { 
+                transform: translate(0);
+                filter: none;
+            }
+            91% { 
+                transform: translate(-2px, 2px);
+                filter: hue-rotate(180deg) saturate(2);
+            }
+            93% {
+                transform: translate(2px, -2px);
+                filter: invert(0.1);
+            }
+            95% {
+                transform: translate(-1px, 1px);
+            }
+        }
+
+        .corruption-critical {
+            animation: glitchCritical 2s infinite;
+            position: relative;
+        }
+
+        @keyframes glitchCritical {
+            0%, 85%, 100% { 
+                transform: translate(0) skew(0deg);
+                filter: none;
+            }
+            86% { 
+                transform: translate(-3px, 2px) skew(-2deg);
+                filter: hue-rotate(270deg) saturate(3) contrast(1.5);
+            }
+            88% {
+                transform: translate(3px, -3px) skew(2deg);
+                filter: invert(0.2);
+            }
+            90% {
+                transform: translate(-2px, 1px) skew(-1deg);
+            }
+            92% {
+                transform: translate(2px, -1px) skew(1deg);
+                filter: saturate(5);
+            }
+        }
+
+        /* Notes style */
+        .handwritten-note {
+            background: rgba(255, 250, 205, 0.95);
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px dashed #999;
+            font-family: 'Comic Sans MS', cursive;
+            transform: rotate(-1deg);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .handwritten-note::before {
+            content: '[HANDWRITTEN NOTE ATTACHED]';
+            display: block;
+            font-family: 'Courier New', monospace;
             font-size: 0.7rem;
-            color: rgba(139, 0, 0, 0.15);
-            pointer-events: none;
-            animation: fadeWhisper 10s infinite;
-            font-style: italic;
-            text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
-        }
-
-        @keyframes fadeWhisper {
-            0%, 100% { opacity: 0; transform: translateY(0); }
-            50% { opacity: 0.5; transform: translateY(-10px); }
-        }
-
-        .whispers:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-        .whispers:nth-child(2) { top: 30%; right: 8%; animation-delay: 3s; }
-        .whispers:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 6s; }
-        .whispers:nth-child(4) { top: 60%; right: 15%; animation-delay: 9s; }
-
-        footer {
+            color: #999;
+            margin-bottom: 10px;
             text-align: center;
-            padding: 40px 0;
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.1);
+            border: 2px solid #8b0000;
+            padding: 20px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .warning-box::before {
+            content: '⚠ WARNING ⚠';
+            display: block;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #8b0000;
+        }
+
+        /* Incident report style */
+        .incident-report {
+            background: rgba(245, 245, 220, 0.95);
+            color: #1a1a1a;
+            padding: 30px;
+            margin: 20px 0;
+            border: 2px solid #666;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+        }
+
+        .incident-header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .signature-line {
+            margin-top: 40px;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+        }
+
+        /* List items */
+        .observation-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .observation-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .observation-list li::before {
+            content: '■ ';
+            color: #8b0000;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        .document-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.2);
+            font-size: 0.8rem;
             color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid #333;
-            margin-top: 60px;
+            text-align: center;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-                letter-spacing: 4px;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-                gap: 5px;
-            }
-
-            .label {
-                margin-bottom: 5px;
-            }
-
-            .section {
+            .document {
                 padding: 20px;
             }
+            
+            .subject-line {
+                font-size: 1.8rem;
+            }
+
+            .classified-stamp {
+                font-size: 1.2rem;
+                letter-spacing: 4px;
+            }
         }
 
-        /* Decay animation on scroll */
-        .section {
+        /* Decay animation on load */
+        .document {
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.6s forwards;
+            animation: fadeInDoc 0.8s forwards;
         }
 
-        .section:nth-child(1) { animation-delay: 0.1s; }
-        .section:nth-child(2) { animation-delay: 0.2s; }
-        .section:nth-child(3) { animation-delay: 0.3s; }
-        .section:nth-child(4) { animation-delay: 0.4s; }
-        .section:nth-child(5) { animation-delay: 0.5s; }
-        .section:nth-child(6) { animation-delay: 0.6s; }
-        .section:nth-child(7) { animation-delay: 0.7s; }
-        .section:nth-child(8) { animation-delay: 0.8s; }
-        .section:nth-child(9) { animation-delay: 0.9s; }
+        .document:nth-child(2) { animation-delay: 0.2s; }
+        .document:nth-child(3) { animation-delay: 0.4s; }
+        .document:nth-child(4) { animation-delay: 0.6s; }
+        .document:nth-child(5) { animation-delay: 0.8s; }
+        .document:nth-child(6) { animation-delay: 1s; }
+        .document:nth-child(7) { animation-delay: 1.2s; }
 
-        @keyframes fadeIn {
+        @keyframes fadeInDoc {
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Whispers background effect -->
-    <div class="whispers">he comes</div>
-    <div class="whispers">entropy</div>
-    <div class="whispers">decay</div>
-    <div class="whispers">behind the rows</div>
-
     <div class="container">
-        <header>
-            <h1 class="glitch-text">ZALGO</h1>
-            <p class="subtitle">He Who Waits Behind The Rows</p>
-        </header>
+        <!-- File Header -->
+        <div class="file-header">
+            <div class="classified-stamp">CLASSIFIED</div>
+            <div class="file-number">FILE NO: ████-Z-001</div>
+            <div class="file-number">CLEARANCE LEVEL: <span style="color: #8b0000;">MAXIMUM</span></div>
+            <h1 class="subject-line">SUBJECT: ZALGO</h1>
+            <div class="file-number">DESIGNATION: "He Who Waits Behind The Rows"</div>
+            <span class="threat-level">THREAT LEVEL: EXISTENTIAL</span>
+        </div>
 
-        <!-- Basic Info Section -->
-        <div class="section">
-            <h2>Basic Information</h2>
-            <div class="info-grid">
-                <div class="label">Character</div>
-                <div class="value">Zalgo / The Corruption / He Who Waits Behind The Rows</div>
+        <!-- Basic Information Document -->
+        <div class="document corruption-low">
+            <div class="document-header">
+                <div class="document-title">Subject Identification Report</div>
+                <div class="document-date">Date: [ENTER DATE] | Report ID: SIR-Z-001</div>
             </div>
-            <div class="info-grid">
-                <div class="label">Age</div>
-                <div class="value">[Fill in your age info here]</div>
+
+            <div class="field">
+                <div class="field-label">Primary Designation</div>
+                <div class="field-value">Zalgo / The Corruption / He Who Waits Behind The Rows</div>
             </div>
-            <div class="info-grid">
-                <div class="label">Pronouns / Gender</div>
-                <div class="value">[Fill in pronouns/gender here]</div>
+
+            <div class="field">
+                <div class="field-label">Age / Temporal Origin</div>
+                <div class="field-value">[Fill in age/origin - possibly predates recorded history]</div>
             </div>
-            <div class="info-grid">
-                <div class="label">Species</div>
-                <div class="value">[Fill in species here]</div>
+
+            <div class="field">
+                <div class="field-label">Physical Form</div>
+                <div class="field-value">[Fill in - Note: Subject has no fixed form, manifests through vessels]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Classification</div>
+                <div class="field-value">[Fill in species/entity type - Extradimensional? Memetic? Reality corruptor?]</div>
+            </div>
+
+            <div class="warning-box">
+                Direct observation of subject has resulted in <span class="redacted">seventeen</span> casualties and <span class="redacted">forty-three</span> cases of irreversible psychological contamination.
             </div>
         </div>
 
-        <!-- Relationships Section -->
-        <div class="section">
-            <h2>Relationships</h2>
-            <div class="content-block">
-                <p>[Fill in relationship information here. Confirm with other players/characters.]</p>
+        <!-- Physical Description Document -->
+        <div class="document corruption-medium">
+            <div class="document-header">
+                <div class="document-title">Physical Manifestation Report</div>
+                <div class="document-date">Date: [ENTER DATE] | Report ID: PMR-Z-002</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Visual Description</div>
+                <div class="field-value">[Fill in appearance details - describe the vessels, the wrongness, the decay. Note how reality seems to distort around manifestations.]</div>
+            </div>
+
+            <div class="handwritten-note">
+                It doesn't HAVE a form, not really. Every time we see it, it's different. Wearing something. Someone. The vessels rot from the inside out but they keep moving. Keep spreading. God help us, they keep spreading.
+                <br><br>
+                - Dr. [REDACTED], Field Observation Log
+            </div>
+
+            <div class="field">
+                <div class="field-label">Notable Characteristics</div>
+                <div class="field-value">
+                    <ul class="observation-list">
+                        <li>[Characteristic 1 - e.g., Text corruption in vicinity]</li>
+                        <li>[Characteristic 2 - e.g., Reality distortion effects]</li>
+                        <li>[Characteristic 3 - e.g., Spreading decay patterns]</li>
+                        <li>[Add more observations]</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Enemies Section -->
-        <div class="section">
-            <h2>Enemies</h2>
-            <div class="content-block">
-                <p>[Fill in enemy information here]</p>
+        <!-- Behavioral Analysis Document -->
+        <div class="document corruption-medium">
+            <div class="document-header">
+                <div class="document-title">Behavioral Analysis & Personality Profile</div>
+                <div class="document-date">Date: [ENTER DATE] | Report ID: BAP-Z-003</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Psychological Profile</div>
+                <div class="field-value">[Fill in personality description. Consider: Is it malevolent? Indifferent? Does it have goals or simply exists as corruption incarnate?]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Observed Behaviors</div>
+                <div class="field-value">
+                    <ul class="observation-list">
+                        <li>[Behavior 1]</li>
+                        <li>[Behavior 2]</li>
+                        <li>[Behavior 3]</li>
+                        <li>[Add more patterns]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Habits / Patterns</div>
+                <div class="field-value">
+                    <ul class="observation-list">
+                        <li>[Pattern/Quirk 1]</li>
+                        <li>[Pattern/Quirk 2]</li>
+                        <li>[Pattern/Quirk 3]</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Strengths Section -->
-        <div class="section">
-            <h2>Strengths</h2>
-            <div class="content-block">
-                <div class="list-item">[Strength 1]</div>
-                <div class="list-item">[Strength 2]</div>
-                <div class="list-item">[Strength 3]</div>
-                <div class="list-item">[Add more as needed]</div>
+        <!-- Capabilities Assessment -->
+        <div class="document corruption-high">
+            <div class="document-header">
+                <div class="document-title">Threat Assessment: Capabilities</div>
+                <div class="document-date">Date: [ENTER DATE] | Report ID: TAC-Z-004</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Known Abilities / Strengths</div>
+                <div class="field-value">
+                    <ul class="observation-list">
+                        <li>[Strength 1 - e.g., Reality manipulation]</li>
+                        <li>[Strength 2 - e.g., Memetic infection]</li>
+                        <li>[Strength 3 - e.g., Vessel possession]</li>
+                        <li>[Strength 4 - e.g., Dimensional traversal]</li>
+                        <li>[Add more capabilities]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                Subject has demonstrated ability to breach containment through <span class="redacted">cognitohazardous</span> means. Personnel are advised that THINKING about subject may constitute a containment breach.
+            </div>
+
+            <div class="field">
+                <div class="field-label">Documented Weaknesses / Limitations</div>
+                <div class="field-value">
+                    <ul class="observation-list">
+                        <li>[Weakness 1 - if any can be confirmed]</li>
+                        <li>[Weakness 2]</li>
+                        <li>[Weakness 3]</li>
+                        <li>[Note: Exploitable weaknesses remain largely theoretical]</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Weaknesses Section -->
-        <div class="section">
-            <h2>Weaknesses</h2>
-            <div class="content-block">
-                <div class="list-item">[Weakness 1]</div>
-                <div class="list-item">[Weakness 2]</div>
-                <div class="list-item">[Weakness 3]</div>
-                <div class="list-item">[Add more as needed]</div>
+        <!-- Relationship Matrix -->
+        <div class="document corruption-high">
+            <div class="document-header">
+                <div class="document-title">Known Associations & Conflicts</div>
+                <div class="document-date">Date: [ENTER DATE] | Report ID: KAC-Z-005</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Allied Entities / Followers</div>
+                <div class="field-value">[Fill in relationships with other entities. Confirm with other players/characters. Include nature of relationship - servants? Corrupted? Willing allies?]</div>
+            </div>
+
+            <div class="field">
+                <div class="field-label">Hostile Entities / Adversaries</div>
+                <div class="field-value">[Fill in enemy information. Who opposes Zalgo? What is the nature of the conflict?]</div>
+            </div>
+
+            <div class="handwritten-note" style="transform: rotate(1deg);">
+                Found this carved into the wall of Research Station Theta after the incident:
+                <br><br>
+                "HE WAITS"<br>
+                "HE WATCHES"<br>
+                "HE COMES"<br>
+                <br>
+                All personnel lost. Station quarantined indefinitely.
             </div>
         </div>
 
-        <!-- Habits / Quirks Section -->
-        <div class="section">
-            <h2>Habits / Quirks</h2>
-            <div class="content-block">
-                <div class="list-item">[Habit/Quirk 1]</div>
-                <div class="list-item">[Habit/Quirk 2]</div>
-                <div class="list-item">[Habit/Quirk 3]</div>
-                <div class="list-item">[Add more as needed]</div>
+        <!-- Incident Reports -->
+        <div class="document corruption-critical">
+            <div class="document-header">
+                <div class="document-title">Incident Log [EXCERPTS]</div>
+                <div class="document-date">Multiple Dates | Report ID: IL-Z-006</div>
+            </div>
+
+            <div class="incident-report">
+                <div class="incident-header">INCIDENT REPORT #[NUMBER]</div>
+                <p><strong>Date:</strong> [DATE]</p>
+                <p><strong>Location:</strong> [LOCATION]</p>
+                <p><strong>Summary:</strong> [Fill in incident details - what happened? How did Zalgo manifest? What were the consequences?]</p>
+                <p><strong>Casualties:</strong> [NUMBER]</p>
+                <p><strong>Status:</strong> <span style="color: #8b0000;">[UNCONTAINED / ONGOING / TERMINATED]</span></p>
+            </div>
+
+            <div class="incident-report">
+                <div class="incident-header">INCIDENT REPORT #[NUMBER]</div>
+                <p><strong>Date:</strong> [DATE]</p>
+                <p><strong>Location:</strong> [LOCATION]</p>
+                <p><strong>Summary:</strong> [Another incident]</p>
+                <p><strong>Casualties:</strong> [NUMBER]</p>
+                <p><strong>Status:</strong> <span style="color: #8b0000;">[STATUS]</span></p>
             </div>
         </div>
 
-        <!-- Personality Section -->
-        <div class="section">
-            <h2>Personality</h2>
-            <div class="content-block">
-                <p>[Fill in personality description here. Make it detailed and engaging!]</p>
+        <!-- Additional Notes -->
+        <div class="document corruption-critical">
+            <div class="document-header">
+                <div class="document-title">Additional Intelligence & Notes</div>
+                <div class="document-date">Date: [ENTER DATE] | Report ID: AIN-Z-007</div>
+            </div>
+
+            <div class="field">
+                <div class="field-value">
+                    [Fill in any additional information, theories, backstory elements, or observations that don't fit in other sections. This is where you can add depth - maybe fragments of lore, theories about Zalgo's origins, notes from researchers who have studied it, etc.]
+                </div>
+            </div>
+
+            <div class="warning-box" style="animation: glitchCritical 1s infinite;">
+                THIS DOCUMENT HAS BEEN COMPROMISED
+                <br>
+                MEMETIC HAZARD DETECTED
+                <br>
+                DO NOT CONTINUE READING
+                <br>
+                IT IS ALREADY TOO LATE
+                <br>
+                H̴̡̛̖̠̳̘̪̤̫̬̩̙̪͚̥͎͙̱̦̗̥̠̮͓̋̀̂̾͛̀̊̃̿̐͛̀͋̀̇̔̚͘͜͝͝E̵̡̧̧̡̨̛͔̪͙̘͕̱̣̱̦̺̮̥͓̖̱̹̪̓̊̓͊̈́̅̎̐̈́͂͊̽̓̓̈́̄̚͜͝͠ ̶̨̧̡̧̛̛̦̰̪̮̭̬̹̦̪̦̮̩͚̠͎̣̝̞̹̗̪̙͌̓̈́͛̀̌̿̓̈́̆̿̆̋͆̅̚͜͝͝Ć̸̢̢̢̨̡̛̼̭̙̝̱̱̩̟̝̱͕̞̻̰̖̻̯̜̈́̍͛̓̉̾̀̓̂̀̈̓͋̈́̐͒̇͐̿̚͜͝Ơ̴̧̨̢̢̧̖̩͔̙͍̜̗̰̜̹̻̬̬̭̹̰̭̘͙̫̋̾̓͊͂̄́̽̉̈́̀̚M̸̨̧̛̝̳̱̯̟̺͍̮̗̼͎͎̙̮̳̰͇̯͖̣͆̏̈̊̾̉̌̅̾́́̈́́̾̈́͝͝͝͠E̵̡̢̢̛̛͔̗̩̦͉̩̫̤̳̼̠̲̩̘̿͑̈́͒̿̈́̽̋̓̊̈́̐̾̊̎̆̌̈́̂͘͝S̸̡̧̨̛͈̻̺̠̪̞͎͔̻͇̬̙̪̮̱̜̓̓̃͌͊͂̉̎̿̓̅̔̾̊͋͛̏̄̚̕̕͝͠͝
+            </div>
+
+            <div class="document-footer">
+                END OF FILE • DO NOT DISTRIBUTE • UNAUTHORIZED ACCESS IS PUNISHABLE BY <span class="redacted">REDACTED</span>
             </div>
         </div>
-
-        <!-- Notes / Extra Section -->
-        <div class="section">
-            <h2>Notes / Extra</h2>
-            <div class="content-block">
-                <p>[Fill in additional notes, backstory details, or extra information here]</p>
-            </div>
-        </div>
-
-        <!-- Appearance Section -->
-        <div class="section">
-            <h2>Appearance</h2>
-            <div class="content-block">
-                <p>[Fill in appearance description here. Describe the vessels, the decay, the wrongness]</p>
-            </div>
-        </div>
-
-        <footer>
-            <p>Character Profile • Created for Roleplay</p>
-        </footer>
     </div>
 </body>
 </html>
